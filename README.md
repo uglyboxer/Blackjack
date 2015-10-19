@@ -11,10 +11,10 @@ TravisCI button will live here.
 
 From the command line, navigate to the directory where blackjack.py is housed and enter:
 
-'''
+```
 $ python3 blackjack.py
-'''
+```
 
-'''
+```
 output example of number of decks and sample hand
-'''
+```
