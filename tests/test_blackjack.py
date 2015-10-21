@@ -1,9 +1,10 @@
 import unittest
 
 # import blackjack.bj_main
-import blackjack.bj_main
-from blackjack.card import Card
-import blackjack.shoe
+from blackjack.bj_main import Game
+from blackjack.packages.card import Card
+from blackjack.packages.shoe import Shoe
+from blackjack.packages.player import Dealer, Player, User
 
 
 class TestCardClass(unittest.TestCase):
@@ -27,7 +28,7 @@ class TestCardClass(unittest.TestCase):
 class TestShoeClass(unittest.TestCase):
 
 	def test_constructor(self):
-		self.shoe = blackjack.Shoe(1)
+		self.shoe = Shoe(1)
 		self.assertEqual(len(self.shoe.cards), 52)
 
 	def test_merge_sort(self):
@@ -36,8 +37,8 @@ class TestShoeClass(unittest.TestCase):
 class TestPlayerClass(unittest.TestCase):
 
 	def test_score_aces(self):
-		self.shoe = blackjack.Shoe(1)
-		self.hand = blackjack.Player(self.shoe)
+		self.shoe = Shoe(1)
+		self.hand = Player(self.shoe)
 		self.card1 = Card(('A', 'S'))
 		self.card2 = Card(('A', 'H'))
 		self.hand.hand_of_cards.append(self.card1)
@@ -45,8 +46,8 @@ class TestPlayerClass(unittest.TestCase):
 		self.assertEqual(self.hand.score(), 12)
 
 	def test_score_(self):
-		self.shoe = blackjack.Shoe(1)
-		self.hand = blackjack.Dealer(self.shoe)
+		self.shoe = Shoe(1)
+		self.hand = Dealer(self.shoe)
 		self.card1 = Card(('K', 'S'))
 		self.card2 = Card(('3', 'H'))
 		self.hand.hand_of_cards.append(self.card1)
@@ -56,9 +57,9 @@ class TestPlayerClass(unittest.TestCase):
 class TestGameClass(unittest.TestCase):
 
 	def test_game(self):
-		self.shoe = blackjack.Shoe(1)
+		self.shoe = Shoe(1)
 		self.shoe.shuffle_shoe()
-		self.game = blackjack.Game(self.shoe)
+		self.game = Game(self.shoe)
 		self.game.deal()
 		self.assertEqual(len(self.game.dealer.hand_of_cards), 2)
 		self.assertEqual(len(self.game.player.hand_of_cards), 2)

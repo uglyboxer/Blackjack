@@ -18,9 +18,9 @@ Dependencies
 """
 
 
-from card import Card
-from player import Dealer, Player, User
-from shoe import Shoe
+from blackjack.packages.card import Card
+from blackjack.packages.player import Dealer, Player, User
+from blackjack.packages.shoe import Shoe
 
 
 class Game:

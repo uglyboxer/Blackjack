@@ -1,5 +1,5 @@
 def merge_sort(lst):
-	if len(lst) == 1:
+	if len(lst) <= 1:
 		return lst
 	else:
 		mid = len(lst)//2
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 	b = [1, 2, 3, 4]
 	c = [6, 7, 8, 1, 2, 3]
 	d = [5, 5, 5, 5]
+	assert merge_sort([]) == []
 	assert merge_sort(b) == [1, 2, 3, 4]  # Pre-sorted
 	assert merge_sort(c) == [1, 2, 3, 6, 7, 8] # Even #
 	assert merge_sort(d) == [5, 5, 5, 5]  # All identical elems
-	print("victory")

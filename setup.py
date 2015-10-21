@@ -11,7 +11,7 @@ config = {
     'author_email': 'uglyboxer@gmail.com',
     'version': '0.1',
     'install_requires': ['pytest'],
-    'packages': ['blackjack'],
+    'packages': ['blackjack', 'blackjack.packages'],
     'scripts': [],
     'name': 'Blackjack'
 }
