@@ -78,6 +78,17 @@ class Game:
                     return False
         return True
 
+    def status(self):
+        """ Reports the status of the game 
+
+        Returns
+        -------
+        string
+          The message to the user
+        string
+          The winner (if one) "d" (dealer), "p" (player), or None
+        """
+
     def play(self):
         """ Plays a single round of blackjack
 
@@ -90,11 +101,11 @@ class Game:
             return None  # .hand_out_card reports back no more cards
         while True:
             print("\n")
-            if self.dealer.score() == 21:
+            if self.dealer.score() == self.max_target_score:
                 print("Dealer got a Blackjack!  You lose.")
                 winner = "d"
                 break
-            if self.player.score() == 21:
+            if self.player.score() == self.max_target_score:
                 print("You got a Blackjack!  You win.")
                 winner = "p"
                 break
