@@ -1,5 +1,6 @@
 from random import shuffle
-from card import Card
+
+from .card import Card
 
 
 class Shoe():

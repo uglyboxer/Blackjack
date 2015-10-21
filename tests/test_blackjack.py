@@ -1,16 +1,19 @@
 import unittest
 
-from ..blackjack import blackjack, card
+# import blackjack.bj_main
+import blackjack.bj_main
+from blackjack.card import Card
+import blackjack.shoe
 
 
 class TestCardClass(unittest.TestCase):
 
 	def test_assign_value(self):
-		self.card = card.Card(('K', 'S'))
+		self.card = Card(('K', 'S'))
 		self.assertEqual(self.card.value, 10)
 
 	def test_flip_value(self):
-		self.card = card.Card(('A', 'H'))
+		self.card = Card(('A', 'H'))
 		self.assertEqual(self.card.value, 11)
 		self.card.flip_ace()
 		self.assertEqual(self.card.value, 1)
@@ -18,7 +21,7 @@ class TestCardClass(unittest.TestCase):
 		self.assertEqual(self.card.value, 11)
 
 	def test_bad_ace(self):
-		self.card = card.Card(('3', 'C'))
+		self.card = Card(('3', 'C'))
 		self.assertEqual(self.card.flip_ace(), "Not an ace!")
 
 class TestShoeClass(unittest.TestCase):
@@ -35,8 +38,8 @@ class TestPlayerClass(unittest.TestCase):
 	def test_score_aces(self):
 		self.shoe = blackjack.Shoe(1)
 		self.hand = blackjack.Player(self.shoe)
-		self.card1 = card.Card(('A', 'S'))
-		self.card2 = card.Card(('A', 'H'))
+		self.card1 = Card(('A', 'S'))
+		self.card2 = Card(('A', 'H'))
 		self.hand.hand_of_cards.append(self.card1)
 		self.hand.hand_of_cards.append(self.card2)
 		self.assertEqual(self.hand.score(), 12)
@@ -44,8 +47,8 @@ class TestPlayerClass(unittest.TestCase):
 	def test_score_(self):
 		self.shoe = blackjack.Shoe(1)
 		self.hand = blackjack.Dealer(self.shoe)
-		self.card1 = card.Card(('K', 'S'))
-		self.card2 = card.Card(('3', 'H'))
+		self.card1 = Card(('K', 'S'))
+		self.card2 = Card(('3', 'H'))
 		self.hand.hand_of_cards.append(self.card1)
 		self.hand.hand_of_cards.append(self.card2)
 		self.assertEqual(self.hand.score(), 13)  
