@@ -78,6 +78,17 @@ class Game:
                     return False
         return True
 
+    def status(self):
+        """ Reports the status of the game 
+
+        Returns
+        -------
+        string
+          The message to the user
+        string
+          The winner (if one) "d" (dealer), "p" (player), or None
+        """
+
     def play(self):
         """ Plays a single round of blackjack
 
@@ -121,12 +132,12 @@ class Game:
                 print("\n")
                 winner = "d"
                 break
-            elif self.dealer.score() == max_target_score:
+            elif self.dealer.score() == self.max_target_score:
                 print("Dealer got a Blackjack!  You lose.")
                 print("\n")
                 winner = "d"
                 break
-            elif self.player.score() == max_target_score:
+            elif self.player.score() == self.max_target_score:
                 print("You got a Blackjack!  You win.")
                 print("\n")
                 winner = "p"
