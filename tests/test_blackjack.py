@@ -79,11 +79,11 @@ class TestPlayerClass(unittest.TestCase):
     def test_pretty_output(self):
         self.shoe = Shoe(1)
         self.hand = Dealer(self.shoe)
-        self.card1 = Card(('K', 'S', 1))
-        self.card2 = Card(('K', 'H', 2))
+        self.card1 = Card(('K', 'Spades', 1))
+        self.card2 = Card(('K', 'Hearts', 2))
         self.hand.hand_of_cards.append(self.card1)
         self.hand.hand_of_cards.append(self.card2)
-        self.assertEqual(self.hand.pretty_output(), 'K K ')
+        self.assertEqual(self.hand.pretty_output(), '\nK of Spades\nK of Hearts\n')
 
     def test_update_status(self):
         self.shoe = Shoe(1)
