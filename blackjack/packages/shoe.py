@@ -49,7 +49,7 @@ class Shoe():
             A list of cards that is a (num_decks) multiple of standard
             52 card decks.
         """
-        suits = ['H', 'D', 'C', 'S']
+        suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
         possible_cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J',
                           'Q', 'K', 'A']
 

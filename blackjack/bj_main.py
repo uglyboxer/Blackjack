@@ -5,7 +5,7 @@ A simple implementation of the game of blackjack.
 
 The user is tasked with defining the number of decks of 52 cards to be used in
 the shoe.  The game can then be played until the shoe runs out or the user opts
-out.
+out.   Dealer always wins ties.
 
 Usage
 -----
@@ -24,13 +24,14 @@ or
 
 >>>py.test
 
-Dependencies
-------------
+Dependencies:
     Python 3.0 or newer
     random.shuffle
     Card class from card.py
     Shoe class from shoe.py
     User and Dealer (subclasses of Player) from player.py
+
+
 """
 
 
@@ -78,82 +79,103 @@ class Game:
                     return False
         return True
 
-    def status(self):
-        """ Reports the status of the game 
+    def report(self, finished=False):
+        """ Reports the status of the game to the stdout on command line """
+        
+        if finished == False:
+            verb = "has"
+        else:
+            verb = "had"
+        print(chr(27) + "[2J")
+        print("Dealer {}: {}For a total of {}"
+              .format(verb, self.dealer.pretty_output(), self.dealer.score()))
+        print("\n")
+        print("Player {}: {}For a total of {}"
+              .format(verb, self.player.pretty_output(), self.player.score()))
+        print("\n")
+
+    def eval_state(self):
+        """ Evaluates the status of the game to the stdout on command line
 
         Returns
         -------
         string
-          The message to the user
-        string
-          The winner (if one) "d" (dealer), "p" (player), or None
+            "d", "p", or None (if out of cards or unresolved)
         """
+        winner = None
+        if self.dealer.status["bj"] or self.player.status["bust"]:
+            winner = "d"
+        elif self.player.status["bj"] or self.dealer.status["bust"]:
+            winner = "p"
+        return winner
+
+    def get_winner(self):
+        """ Determines the winner if both players pass
+
+        Returns
+        -------
+        string 
+            "d" (dealer) or "p" (player) for victor
+        """
+        if self.player.score() <= self.dealer.score():
+            return "d"
+        else:
+            return "p"
+
+
+    def report_results(self):
+        """ Report final outcome of the hand
+
+        Returns
+        -------
+        True
+            As notification of execution
+        """
+        print("Dealer finished with: ", self.dealer.score())
+        print("You had: ", self.player.score())
+        print("\n")
+        return True
 
     def play(self):
         """ Plays a single round of blackjack
 
         Returns
         -------
-        winner : instance of Player object
+        instance of Player object
         """
 
         if not self.deal():
             return None  # .hand_out_card reports back no more cards
-        while True:
-            print("\n")
-            if self.dealer.score() == self.max_target_score:
-                print("Dealer got a Blackjack!  You lose.")
-                winner = "d"
-                break
-            if self.player.score() == self.max_target_score:
-                print("You got a Blackjack!  You win.")
-                winner = "p"
-                break
-
-            print("Dealer has {}for a total of {}"
-                  .format(self.dealer.pretty_output(), self.dealer.score()))
-            print("Player has {}for a total of {}"
-                  .format(self.player.pretty_output(), self.player.score()))
-            print("\n")
-            if self.dealer.interested and self.dealer.hits() and\
+        if not self.dealer.update_status() or\
+               not self.player.update_status():
+                print("Something went wrong.")
+        winner = self.eval_state()        
+        while not winner:
+            self.report()
+            if self.dealer.status["interested"] and self.dealer.hits() and\
                not self.dealer.get_card():
                 return None  # .get_card reports back no more cards
-            if self.player.interested and self.player.hits() and\
-               not self.player.get_card():
+            elif self.player.status["interested"] and self.player.hits() and\
+                 not self.player.get_card():
                 return None  # .get_card reports back no more cards
-
-            if self.dealer.score() > self.max_target_score:
-                print("HE BUSTED!")
-                print("\n")
-                winner = "p"
+            
+            if not self.dealer.update_status() or\
+               not self.player.update_status():
+                print("Something went wrong.")  # If update fails 
+            winner = self.eval_state()
+            if winner:
                 break
-            elif self.player.score() > self.max_target_score:
-                print("YOU BUSTED!")
-                print("\n")
-                winner = "d"
+            elif not self.dealer.status["interested"] and\
+                 not self.player.status["interested"]:
+                winner = self.get_winner()
                 break
-            elif self.dealer.score() == self.max_target_score:
-                print("Dealer got a Blackjack!  You lose.")
-                print("\n")
-                winner = "d"
-                break
-            elif self.player.score() == self.max_target_score:
-                print("You got a Blackjack!  You win.")
-                print("\n")
-                winner = "p"
-                break
-            elif not self.dealer.interested and not self.player.interested:
-                if self.player.score() <= self.dealer.score():
-                    winner = "d"
-                    print("Dealer wins.")
-                else:
-                    winner = "p"
-                    print("You win.")
-                break
-        print("Dealer finished with: ", self.dealer.score())
-        print("You had: ", self.player.score())
-        print("\n")
-        return winner
+        self.report(finished=True)
+        if self.report_results():
+            
+            return winner 
+        else:
+            print("Something went wrong.")
+            return None
 
 
 class Blackjack:
@@ -177,6 +199,7 @@ class Blackjack:
         try:
             print("\n")
             num_decks = int(input("How many decks would you like to use? "))
+            print("\n")
             assert abs(num_decks) == num_decks
         except:
             print("Sorry, we need a positive integer.")
@@ -188,18 +211,25 @@ class Blackjack:
             self.game = Game(self.shoe)
             victor = self.game.play()
             if victor == 'p':
+                print("You win!")
+                print("\n")
                 self.player_victories += 1
             elif victor == 'd':
+                print("Dealer won.")
+                print("\n")
                 self.dealer_victories += 1
             else:
                 print("Sorry, shoe is out of cards.")
                 print("\n")
                 break
             another = input("Would you like to play another? (y/n) ")
+            print(chr(27) + "[2J")
             if another.lower().strip() == 'n':
                 break
+        print("\n")
         print("Dealer won: ", self.dealer_victories)
         print("You won: ", self.player_victories)
+        print("\n")
 
 
 if __name__ == '__main__':

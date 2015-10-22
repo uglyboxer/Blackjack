@@ -1,6 +1,6 @@
 import unittest
 
-from blackjack.bj_main import Game
+from blackjack.bj_main import Blackjack, Game
 from blackjack.packages.card import Card
 from blackjack.packages.shoe import Shoe
 from blackjack.packages.player import Dealer, Player, User
@@ -85,6 +85,26 @@ class TestPlayerClass(unittest.TestCase):
         self.hand.hand_of_cards.append(self.card2)
         self.assertEqual(self.hand.pretty_output(), 'K K ')
 
+    def test_update_status(self):
+        self.shoe = Shoe(1)
+        self.hand = Dealer(self.shoe)
+        self.card1 = Card(('K', 'S', 1))
+        self.card2 = Card(('6', 'H', 2))
+        self.card3 = Card(('8', 'H', 3))
+        self.hand.hand_of_cards.append(self.card1)
+        self.hand.hand_of_cards.append(self.card2)
+        self.hand.update_status()
+        self.assertEqual(self.hand.status["bj"], False)
+        self.assertEqual(self.hand.status["interested"], True)
+        self.assertEqual(self.hand.status["bust"], False)
+        self.hand.hand_of_cards.append(self.card3)
+        self.hand.hits()
+        self.hand.update_status()
+        self.assertEqual(self.hand.status["bj"], False)
+        self.assertEqual(self.hand.status["interested"], False)
+        self.assertEqual(self.hand.status["bust"], True)
+
+
 
 class TestGameClass(unittest.TestCase):
 
@@ -96,6 +116,63 @@ class TestGameClass(unittest.TestCase):
         self.assertEqual(len(self.game.dealer.hand_of_cards), 2)
         self.assertEqual(len(self.game.player.hand_of_cards), 2)
 
+    def test_eval_state(self):
+        self.shoe = Shoe(1)
+        self.game = Game(self.shoe)
+        self.card1 = Card(('2', 'S', 1))
+        self.card2 = Card(('7', 'H', 2))
+        self.card3 = Card(('K', 'S', 1))
+        self.card4 = Card(('A', 'H', 2))
+        self.game.player.hand_of_cards.append(self.card1)
+        self.game.player.hand_of_cards.append(self.card2)
+        self.game.dealer.hand_of_cards.append(self.card3)
+        self.game.dealer.hand_of_cards.append(self.card4)
+        self.game.dealer.update_status()
+        self.game.player.update_status()
+        self.assertEqual(self.game.eval_state(), "d")
+
+        self.shoe = Shoe(1)
+        self.game = Game(self.shoe)
+        self.card1 = Card(('K', 'S', 1))
+        self.card2 = Card(('A', 'H', 2))
+        self.card3 = Card(('7', 'S', 1))
+        self.card4 = Card(('10', 'H', 2))
+        self.game.player.hand_of_cards.append(self.card1)
+        self.game.player.hand_of_cards.append(self.card2)
+        self.game.dealer.hand_of_cards.append(self.card3)
+        self.game.dealer.hand_of_cards.append(self.card4)
+        self.game.dealer.update_status()
+        self.game.player.update_status()
+        self.assertEqual(self.game.eval_state(), "p")
+
+    def test_get_winner(self): 
+        self.shoe = Shoe(1)
+        self.game = Game(self.shoe)
+        self.card1 = Card(('10', 'S', 1))
+        self.card2 = Card(('7', 'H', 2))
+        self.card3 = Card(('K', 'S', 1))
+        self.card4 = Card(('9', 'H', 2))
+        self.game.player.hand_of_cards.append(self.card1)
+        self.game.player.hand_of_cards.append(self.card2)
+        self.game.dealer.hand_of_cards.append(self.card3)
+        self.game.dealer.hand_of_cards.append(self.card4)
+        self.game.dealer.update_status()
+        self.game.player.update_status()
+        self.assertEqual(self.game.get_winner(), "d")
+
+        self.shoe = Shoe(1)
+        self.game = Game(self.shoe)
+        self.card1 = Card(('9', 'S', 1))
+        self.card2 = Card(('A', 'H', 2))
+        self.card3 = Card(('K', 'S', 1))
+        self.card4 = Card(('9', 'H', 2))
+        self.game.player.hand_of_cards.append(self.card1)
+        self.game.player.hand_of_cards.append(self.card2)
+        self.game.dealer.hand_of_cards.append(self.card3)
+        self.game.dealer.hand_of_cards.append(self.card4)
+        self.game.dealer.update_status()
+        self.game.player.update_status()
+        self.assertEqual(self.game.get_winner(), "p")     
 
 class TestDealerClass(unittest.TestCase):
 
@@ -108,6 +185,12 @@ class TestDealerClass(unittest.TestCase):
         self.hand.hand_of_cards.append(self.card2)
         self.assertEqual(self.hand.hits(), False)
 
+class TestBlackjackClass(unittest.TestCase):
+
+    def test__init__(self):
+        self.bj = Blackjack()
+        self.bj.dealer_victories == 0
+        self.bj.player_victories == 0
 
 if __name__ == '__main__':
     unittest.main()

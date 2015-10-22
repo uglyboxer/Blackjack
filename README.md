@@ -24,21 +24,22 @@ until the shoe runs out of cards.
 How many decks would you like to use? 1
 
 
-Dealer has 7 5 for a total of 12
-Player has Q 2 for a total of 12
+Dealer has:
+Q of Spades
+3 of Clubs
+For a total of 13
 
 
-Would you like another card? (y/n) y
+Player has:
+2 of Spades
+7 of Diamonds
+For a total of 9
 
 
-HE BUSTED!
+Would you like another card? (y/n)
+```
 
-
-Dealer finished with:  22
-You had:  21
-
-
-Would you like to play another? (y/n) n
+```
 Dealer won:  0
 You won:  1
 ```
