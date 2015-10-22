@@ -4,7 +4,7 @@
 An Implementation of the Game Blackjack
 Player will be given the option to choose the size of the shoe (# of decks to use).  She will then be able to play Blackjack until the shoe runs out (or she gets tired).
 
-Documentation lives [here](http://wwww.readthedocs.org)
+Documentation lives [here](https://blackjack.readthedocs.org/en/latest/)
 
 TravisCI button will live here.
 
