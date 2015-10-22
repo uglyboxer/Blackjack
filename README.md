@@ -6,7 +6,8 @@ Player will be given the option to choose the size of the shoe (# of decks to us
 
 Documentation lives [here](https://blackjack.readthedocs.org/en/latest/)
 
-TravisCI button will live here.
+Travis CI
+[![Build Status](https://travis-ci.org/uglyboxer/Blackjack.svg?branch=master)](https://travis-ci.org/uglyboxer/Blackjack)
 
 ## To Get Started
 
