@@ -12,16 +12,19 @@ class Player:
         A list of cards in the current hand.
     max_target_score : int
         A constant set to 21 per the rules of blackjack
-    interested : bool
-        Represents whether the player is still interested in more cards during
-        the turn or not.
+    status : dict
+        A dictionary of bools, representing:
+           "bj" : Score a Blackjack?
+           "bust" : Bust(go over 21) yet?
+           "interested" : Interested in receiving another card when offereds
+
     """
 
     def __init__(self, shoe):
         self.shoe = shoe
         self.hand_of_cards = []
         self.max_target_score = 21
-        self.interested = True
+        self.status = {"bj": False, "bust": False, "interested": True}
 
     def score(self):
         """ Calculates the current score of the hand """
@@ -40,8 +43,8 @@ class Player:
         """ Creates a string of the current cards for output """
         full_hand = ""
         for card in self.hand_of_cards:
-            full_hand += card.card_name + " "
-        return full_hand
+            full_hand += "\n" + card.card_name + " of " + card.suit
+        return full_hand + "\n"
 
     def get_card(self):
         """ Gets a new card from the shoe """
@@ -50,6 +53,20 @@ class Player:
             return True
         else:
             return False
+
+    def update_status(self):
+        """ Updates a players status based on score of current hand_of_cards
+
+        Returns
+        -------
+        True
+          As evidence of executing
+        """
+        if self.score() == self.max_target_score:
+            self.status["bj"] = True
+        elif self.score() > self.max_target_score:
+            self.status["bust"] = True
+        return True
 
 
 class Dealer(Player):
@@ -61,7 +78,7 @@ class Dealer(Player):
         if self.score() < 17:
             return True
         else:
-            self.interested = False
+            self.status["interested"] = False
             return False
 
 
@@ -76,5 +93,5 @@ class User(Player):
         if choice.lower().strip() == 'y':
             return True
         else:
-            self.interested = False
+            self.status["interested"] = False
             return False
