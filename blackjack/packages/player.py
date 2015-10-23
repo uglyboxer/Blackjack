@@ -32,7 +32,7 @@ class Player:
         total = sum([card.value for card in self.hand_of_cards])
         if total > self.max_target_score:
             for card in self.hand_of_cards:
-                if card.value == 11:
+                if card.value == 11:  # The value of an ace, can be flipped to 1
                     card.flip_ace()
                     total = sum([card.value for card in\
                                  self.hand_of_cards])
@@ -61,6 +61,7 @@ class Player:
         -------
         True
           As evidence of executing
+
         """
         if self.score() == self.max_target_score:
             self.status["bj"] = True
@@ -72,10 +73,12 @@ class Player:
 class Dealer(Player):
     """ A subclass of the class Player, with a method to determine if he hits
     or not in a given situation.
+
     """
 
     def hits(self):
-        if self.score() < 17:
+        dealer_stays_on = 17
+        if self.score() < dealer_stays_on:
             return True
         else:
             self.status["interested"] = False
@@ -85,13 +88,17 @@ class Dealer(Player):
 class User(Player):
     """ A subclass of the class Player, with a method to determine if he hits
     or not in a given situation.
+
     """
 
     def hits(self):
-        choice = input("Would you like another card? (y/n) ")
-        print("\n")
-        if choice.lower().strip() == 'y':
-            return True
-        else:
-            self.status["interested"] = False
-            return False
+        while True:
+            choice = input("Would you like another card? (y/n) ")
+            print("\n")
+            if choice.lower().strip() == 'y':
+                return True
+            elif choice.lower().strip() == 'n':
+                self.status["interested"] = False
+                return False
+            else:
+                print("y or n are the only valid responses.")

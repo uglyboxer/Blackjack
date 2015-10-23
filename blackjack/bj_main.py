@@ -116,6 +116,7 @@ class Game:
         -------
         string 
             "d" (dealer) or "p" (player) for victor
+
         """
         if self.player.score() <= self.dealer.score():
             return "d"
@@ -130,6 +131,7 @@ class Game:
         -------
         True
             As notification of execution
+
         """
         print("Dealer finished with: ", self.dealer.score())
         print("You had: ", self.player.score())
@@ -142,6 +144,7 @@ class Game:
         Returns
         -------
         instance of Player object
+        
         """
 
         if not self.deal():

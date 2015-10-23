@@ -20,6 +20,7 @@ class Shoe():
         Number of 52 card decks to use
     cards : list
         List of instances of card object returned by the constructor method
+
     """
 
     def __init__(self, num_decks=1):
@@ -48,6 +49,7 @@ class Shoe():
         list
             A list of cards that is a (num_decks) multiple of standard
             52 card decks.
+
         """
         suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
         possible_cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J',
@@ -70,6 +72,12 @@ class Shoe():
     def hand_out_card(self):
         """ Takes the top card, aka the last card in the list of cards and
         removes it from the list and returns it.
+
+        Returns
+        -------
+          bool
+            Based on success of execution.
+
         """
         if self.cards:
             return self.cards.pop()
@@ -79,11 +87,16 @@ class Shoe():
     def cards_left(self):
         """ Not currently accessed by any part of the script, other than the
         testing suite.
+
         """
         return len(self.cards)
 
     def merge_sort(self, lst):
-        if len(lst) <= 1:
+        """ Not currently accessed by any part of the script, other than the
+        testing suite.
+
+        """
+        if len(lst) <= 1:  # Empty list or just 1 item.
             return lst
         else:
             mid = len(lst)//2

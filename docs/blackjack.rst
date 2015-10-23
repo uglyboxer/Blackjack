@@ -11,9 +11,6 @@ Subpackages
 Submodules
 ----------
 
-blackjack.bj_main module
-------------------------
-
 .. automodule:: blackjack.bj_main
     :members:
     :undoc-members:
