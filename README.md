@@ -11,7 +11,7 @@ Documentation:
 Travis CI: 
 [![Build Status](https://travis-ci.org/uglyboxer/Blackjack.svg?branch=master)](https://travis-ci.org/uglyboxer/Blackjack)
 
-py.test coverage results are at the above link.
+py.test coverage results are at the above link.  But coverage isn't accurate.
 
 ## To Get Started
 
