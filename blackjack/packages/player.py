@@ -1,12 +1,12 @@
 class Player:
     """ The hand of cards for a given player
 
-    Arguments
+    Parameters
     ---------
     shoe : Instance of Shoe Class
         The current shoe initialized in Blackjack.sitting()
 
-    Parameters
+    Attributes
     ----------
     hand_of_cards : list
         A list of cards in the current hand.
@@ -34,7 +34,7 @@ class Player:
             for card in self.hand_of_cards:
                 if card.value == 11:  # The value of an ace, can be flipped to 1
                     card.flip_ace()
-                    total = sum([card.value for card in\
+                    total = sum([card.value for card in
                                  self.hand_of_cards])
                     break   # So only one ace gets flipped.
         return total

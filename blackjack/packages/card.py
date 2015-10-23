@@ -5,7 +5,7 @@ class Card:
     Ace cards are valued at 1 or 11 depending on the state of the rest of the
         hand.
 
-    Arguments
+    Parameters
     ----------
     input_card : tuple
       A 3-value tuple composed of:
@@ -16,11 +16,19 @@ class Card:
         orig_loc : int
             The card's original location in the shoe at "construction" time
 
-    Parameters
+    Attributes
     ----------
+    card_name : string
+        The "rank" of given card instance
+    suit : string
+        The "suit"
+    orig_loc : int
+        The integer representing the location in the original shoe, before any
+        shuffling
     value : int
         The integer value (from 1 - 11) of a card's worth in the game of
         Blackjack.
+        
     """
 
     def __init__(self, input_card):

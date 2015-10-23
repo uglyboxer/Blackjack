@@ -8,8 +8,8 @@ class Shoe():
     """ A shoe of cards made out of a number of traditional decks.  User will
     be asked for the number of decks to put in the shoe.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     num_decks : int
         The number of decks supplied by the user.
         Defaults to 1 deck.
@@ -30,6 +30,7 @@ class Shoe():
     def __len__(self):
         """ Overloading Builtin: Assigns the value of len(list of cards) to the
         length of the object
+
         """
         return len(self.cards)
 
@@ -37,7 +38,7 @@ class Shoe():
         """ Builds a shoe of playing card decks.  Each card in a given deck
             will be unique.
 
-        Parameters
+        Attributes
         ----------
         cards : list
             A list of the cards currently available to the players
@@ -66,8 +67,15 @@ class Shoe():
     def shuffle_shoe(self):
         """ Shuffles the order of the cards in the list that constitues the
         shoe.
+
+        Returns
+        -------
+        True
+            For evidence of exectution
+
         """
         shuffle(self.cards)
+        return True
 
     def hand_out_card(self):
         """ Takes the top card, aka the last card in the list of cards and
@@ -75,7 +83,7 @@ class Shoe():
 
         Returns
         -------
-          bool
+        bool
             Based on success of execution.
 
         """
@@ -88,12 +96,27 @@ class Shoe():
         """ Not currently accessed by any part of the script, other than the
         testing suite.
 
+        Returns
+        -------
+        int
+            The length of list that is self.cards
+
         """
         return len(self.cards)
 
     def merge_sort(self, lst):
         """ Not currently accessed by any part of the script, other than the
         testing suite.
+
+        Parameters
+        ----------
+        lst : list
+            A list of "orderable" objects.
+
+        Returns
+        -------
+        list
+            A new list of the same elements - sorted.
 
         """
         if len(lst) <= 1:  # Empty list or just 1 item.

@@ -43,12 +43,13 @@ from blackjack.packages.shoe import Shoe
 class Game:
     """ Initialize game of blackjack
 
-    Arguments
+    Parameters
     ---------
     shoe : Instance of Shoe Class
         The current shoe initialized in Blackjack.sitting()
 
-    Parameters
+
+    Attributes
     ----------
     dealer : instance of Player class
     player : instance of Player class
@@ -82,7 +83,7 @@ class Game:
     def report(self, finished=False):
         """ Reports the status of the game to the stdout on command line """
         
-        if finished == False:
+        if finished is False:
             verb = "has"
         else:
             verb = "had"
