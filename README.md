@@ -5,6 +5,8 @@ An Implementation of the Game Blackjack
 Player will be given the option to choose the size of the shoe (# of decks to use).  She will then be able to play Blackjack until the shoe runs out (or she gets tired).
 
 Documentation lives [here](https://blackjack.readthedocs.org/en/latest/)
+[![Documentation Status](https://readthedocs.org/projects/blackjack/badge/?version=latest)](http://blackjack.readthedocs.org/en/latest/?badge=latest)
+                
 
 Travis CI
 [![Build Status](https://travis-ci.org/uglyboxer/Blackjack.svg?branch=master)](https://travis-ci.org/uglyboxer/Blackjack)
