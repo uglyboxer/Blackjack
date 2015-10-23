@@ -9,6 +9,8 @@ Documentation lives [here](https://blackjack.readthedocs.org/en/latest/)
 Travis CI
 [![Build Status](https://travis-ci.org/uglyboxer/Blackjack.svg?branch=master)](https://travis-ci.org/uglyboxer/Blackjack)
 
+py.test coverage results are at the above link.
+
 ## To Get Started
 
 Copy the folder (and its contents) Blackjack.  from inside that folder use 
